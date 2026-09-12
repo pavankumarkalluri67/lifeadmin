@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import lombok.Setter;
 
 /**
  * A registered platform user.
@@ -25,21 +26,26 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User extends BaseEntity {
 
+    @Setter
     @Column(name = "email", nullable = false, length = 320, unique = true)
     private String email;
 
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
+    @Setter
     @Column(name = "first_name", nullable = false, length = 255)
     private String firstName;
 
+    @Setter
     @Column(name = "last_name", length = 255)
     private String lastName;
 
+    @Setter
     @Column(name = "timezone", nullable = false, length = 64)
     private String timezone;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 32)
     private UserStatus status;
@@ -58,48 +64,24 @@ public class User extends BaseEntity {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPasswordHash() {
         return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(String timezone) {
-        this.timezone = timezone;
-    }
-
     public UserStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
     }
 
     public boolean isEmailVerified() {
@@ -112,10 +94,6 @@ public class User extends BaseEntity {
 
     public Instant getLastLoginAt() {
         return lastLoginAt;
-    }
-
-    public void setLastLoginAt(Instant lastLoginAt) {
-        this.lastLoginAt = lastLoginAt;
     }
 
     public Boolean getEmailVerified() {

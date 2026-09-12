@@ -4,6 +4,8 @@ package com.LifeAdmin.ai.lifeadmin.document.domain;
 import com.LifeAdmin.ai.lifeadmin.common.persistence.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Setter;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -27,6 +29,7 @@ import java.util.UUID;
 })
 public class Document extends BaseEntity {
 
+    @Setter
     @NotNull
     @Column(name = "user_id", nullable = false)
     private UUID userId;
@@ -69,11 +72,13 @@ public class Document extends BaseEntity {
     @Column(name = "document_type", nullable = false)
     private String documentType; // UNKNOWN until processed
 
+    @Setter
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "processing_status", nullable = false)
     private ProcessingStatus processingStatus;
 
+    @Setter
     @Size(max = 64)
     @Column(name = "processing_error_code")
     private String processingErrorCode;
@@ -106,95 +111,48 @@ public class Document extends BaseEntity {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
     public String getOriginalFileName() {
         return originalFileName;
-    }
-
-    public void setOriginalFileName(String originalFileName) {
-        this.originalFileName = originalFileName;
     }
 
     public String getStoredFileName() {
         return storedFileName;
     }
 
-    public void setStoredFileName(String storedFileName) {
-        this.storedFileName = storedFileName;
-    }
-
     public String getStorageKey() {
         return storageKey;
-    }
-
-    public void setStorageKey(String storageKey) {
-        this.storageKey = storageKey;
     }
 
     public String getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
     public String getFileExtension() {
         return fileExtension;
-    }
-
-    public void setFileExtension(String fileExtension) {
-        this.fileExtension = fileExtension;
     }
 
     public Long getFileSizeBytes() {
         return fileSizeBytes;
     }
 
-    public void setFileSizeBytes(Long fileSizeBytes) {
-        this.fileSizeBytes = fileSizeBytes;
-    }
-
     public String getChecksumSha256() {
         return checksumSha256;
-    }
-
-    public void setChecksumSha256(String checksumSha256) {
-        this.checksumSha256 = checksumSha256;
     }
 
     public String getDocumentType() {
         return documentType;
     }
 
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
-    }
-
     public ProcessingStatus getProcessingStatus() {
         return processingStatus;
-    }
-
-    public void setProcessingStatus(ProcessingStatus processingStatus) {
-        this.processingStatus = processingStatus;
     }
 
     public String getProcessingErrorCode() {
         return processingErrorCode;
     }
 
-    public void setProcessingErrorCode(String processingErrorCode) {
-        this.processingErrorCode = processingErrorCode;
-    }
-
     public Instant getUploadedAt() {
         return uploadedAt;
     }
 
-    public void setUploadedAt(Instant uploadedAt) {
-        this.uploadedAt = uploadedAt;
-    }
 }

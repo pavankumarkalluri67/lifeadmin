@@ -23,11 +23,9 @@ import java.util.UUID;
 public class ObligationController {
 
     private final ObligationService obligationService;
-    private final CurrentUserProvider currentUserProvider;
 
     public ObligationController(ObligationService obligationService, CurrentUserProvider currentUserProvider) {
         this.obligationService = obligationService;
-        this.currentUserProvider = currentUserProvider;
     }
 
     @GetMapping

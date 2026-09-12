@@ -121,10 +121,7 @@ public class DocumentService {
         storageService.delete(document.getStorageKey());
 
         // Delete document and associated processing job
-        ProcessingJob job = processingJobRepository.findByDocumentId(id).orElse(null);
-        if (job != null) {
-            processingJobRepository.delete(job);
-        }
+        processingJobRepository.findByDocumentId(id).ifPresent(processingJobRepository::delete);
 
         documentRepository.delete(document);
     }

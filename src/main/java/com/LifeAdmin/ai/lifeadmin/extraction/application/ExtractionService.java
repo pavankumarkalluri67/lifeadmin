@@ -25,7 +25,6 @@ public class ExtractionService {
 
     private final DocumentContentsRepository documentContentsRepository;
     private final ExtractedEntityRepository extractedEntityRepository;
-    private final DocumentRepository documentRepository;
 
     private static final Set<String> ALLOWED_ENTITY_TYPES = Set.of(
         "DATE", "AMOUNT", "PERSON", "ORGANIZATION", "LOCATION", "DURATION",
@@ -37,7 +36,6 @@ public class ExtractionService {
                             DocumentRepository documentRepository) {
         this.documentContentsRepository = documentContentsRepository;
         this.extractedEntityRepository = extractedEntityRepository;
-        this.documentRepository = documentRepository;
     }
 
     @Transactional

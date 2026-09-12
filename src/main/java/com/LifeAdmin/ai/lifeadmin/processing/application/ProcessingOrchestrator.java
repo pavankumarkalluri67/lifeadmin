@@ -11,15 +11,16 @@ import com.LifeAdmin.ai.lifeadmin.obligation.application.ObligationService;
 import com.LifeAdmin.ai.lifeadmin.processing.domain.ProcessingJob;
 import com.LifeAdmin.ai.lifeadmin.processing.domain.ProcessingStage;
 import com.LifeAdmin.ai.lifeadmin.processing.repository.ProcessingJobRepository;
+import com.LifeAdmin.ai.lifeadmin.storage.domain.StorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.UUID;
 
 /**
  * ProcessingOrchestrator: orchestrates the 6-stage document processing pipeline.
  * Requirement 11, 16
- *
  * Stages:
  * 1. QUEUED - Initial state
  * 2. TEXT_EXTRACTION - Extract text from document
@@ -38,19 +39,22 @@ public class ProcessingOrchestrator {
     private final ProcessingService processingService;
     private final AiClient aiClient;
     private final ObligationService obligationService;
+    private final StorageService storageService;
 
     public ProcessingOrchestrator(ProcessingJobRepository processingJobRepository,
                                  DocumentRepository documentRepository,
                                  ExtractionService extractionService,
                                  ProcessingService processingService,
                                  AiClient aiClient,
-                                 ObligationService obligationService) {
+                                 ObligationService obligationService,
+                                 StorageService storageService) {
         this.processingJobRepository = processingJobRepository;
         this.documentRepository = documentRepository;
         this.extractionService = extractionService;
         this.processingService = processingService;
         this.aiClient = aiClient;
         this.obligationService = obligationService;
+        this.storageService = storageService;
     }
 
     @Transactional
@@ -95,7 +99,13 @@ public class ProcessingOrchestrator {
     }
 
     private byte[] getDocumentBytes(Document document) {
-        // In production, retrieve from storage
-        return new byte[0];
+        try {
+            return storageService.retrieve(document.getStorageKey())
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "Stored file missing for document " + document.getId()))
+                    .getContentAsByteArray();
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to read stored document " + document.getId(), e);
+        }
     }
 }

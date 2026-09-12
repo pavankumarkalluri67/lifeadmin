@@ -21,11 +21,9 @@ import java.io.IOException;
 public class DocumentController {
 
     private final DocumentService documentService;
-    private final CurrentUserProvider currentUserProvider;
 
     public DocumentController(DocumentService documentService, CurrentUserProvider currentUserProvider) {
         this.documentService = documentService;
-        this.currentUserProvider = currentUserProvider;
     }
 
     @PostMapping("/upload")
